@@ -1,69 +1,47 @@
 package com.women.empowerment.entites;
 
-import java.io.Serializable;
-import java.util.Set;
+import tn.dalhia.entities.enumerations.Job;
+import tn.dalhia.entities.enumerations.Role;
+import tn.dalhia.entities.enumerations.Speciality;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
+import javax.persistence.*;
+import java.time.LocalTime;
+import java.util.Date;
+import java.util.List;
 
 @Entity
-public class User implements Serializable {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "idU")
-	private int id;
-	
-	private String nom;
-	private String prenom;
-	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	private Set<Publication> publications;
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Enumerated(EnumType.STRING)
+    private Role role;
+    @Column(nullable = false)
+    private String first_name;
+    private String last_name;
+    @Column(unique = true)
+    private String email;
+    private String phone;
+    @Column(nullable = false)
+    private String password;
+    private Date date_birth;
+    private String address;
+    private String city;
+    private String state;
+    private int zipCode;
+    private LocalTime start_hour; //?? time ? e.g: 19:50
+    private LocalTime end_hour; //?? time ? e.g: 19:50
+    private Job job;
+    @Enumerated(EnumType.STRING)
+    private Speciality speciality;
 
-	
-	
-	public User() {
-		super();
-	}
+ 
 
-	public int getId() {
-		return id;
-	}
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
+    private List<Topic> topics; //?? to ask about comments
 
-	public void setId(int id) {
-		this.id = id;
-	}
 
-	public String getNom() {
-		return nom;
-	}
 
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
 
-	public String getPrenom() {
-		return prenom;
-	}
-
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
-	}
-
-	public Set<Publication> getPublications() {
-		return publications;
-	}
-
-	public void setPublications(Set<Publication> publications) {
-		this.publications = publications;
-	}
-	
-	
 
 }

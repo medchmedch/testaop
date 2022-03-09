@@ -1,24 +1,35 @@
 package com.women.empowerment.entites;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Entity
-public class Message {
+
+public class ForumComment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String text;
-    private LocalDateTime dateSent;
+    private LocalDateTime datePublished;
     private LocalDateTime dateRemoved;
-    private boolean banned; // when in group chat
+    private boolean banned;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<CommentReaction> commentReactionList;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<ForumComment> replies;
 
 	public Long getId() {
 		return id;
@@ -36,12 +47,12 @@ public class Message {
 		this.text = text;
 	}
 
-	public LocalDateTime getDateSent() {
-		return dateSent;
+	public LocalDateTime getDatePublished() {
+		return datePublished;
 	}
 
-	public void setDateSent(LocalDateTime dateSent) {
-		this.dateSent = dateSent;
+	public void setDatePublished(LocalDateTime datePublished) {
+		this.datePublished = datePublished;
 	}
 
 	public LocalDateTime getDateRemoved() {
@@ -66,6 +77,22 @@ public class Message {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public List<CommentReaction> getCommentReactionList() {
+		return commentReactionList;
+	}
+
+	public void setCommentReactionList(List<CommentReaction> commentReactionList) {
+		this.commentReactionList = commentReactionList;
+	}
+
+	public List<ForumComment> getReplies() {
+		return replies;
+	}
+
+	public void setReplies(List<ForumComment> replies) {
+		this.replies = replies;
 	}
     
     
