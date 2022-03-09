@@ -1,18 +1,15 @@
 package com.women.empowerment.entites;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 
 @Entity
+@Table(name="users")
 public class User implements Serializable {
 	
 	@Id
@@ -22,12 +19,19 @@ public class User implements Serializable {
 	
 	private String nom;
 	private String prenom;
-	
+	private String Email;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@JsonIgnore
 	private Set<Publication> publications;
 
-	
-	
+	public String getEmail() {
+		return Email;
+	}
+
+	public void setEmail(String email) {
+		Email = email;
+	}
+
 	public User() {
 		super();
 	}
